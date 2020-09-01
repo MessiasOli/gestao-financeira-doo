@@ -1,5 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.props" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" />
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,6 +14,8 @@
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
     <TargetFrameworkProfile />
+    <NuGetPackageImportStamp>
+    </NuGetPackageImportStamp>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -34,8 +37,33 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="EntityFramework, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
+      <HintPath>..\packages\EntityFramework.6.4.4\lib\net45\EntityFramework.SqlServer.dll</HintPath>
+    </Reference>
+    <Reference Include="EPPlus, Version=4.5.3.3, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.5.3.3\lib\net40\EPPlus.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data, Version=8.0.21.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLLs\MySQL\v4.5.2\MySql.Data.dll</HintPath>
+    </Reference>
+    <Reference Include="MySql.Data.EntityFramework, Version=8.0.21.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\DLLs\MySQL\v4.5.2\MySql.Data.EntityFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
+    <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.Threading.Tasks" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -48,27 +76,78 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BD\Conections\ApplicationDbContext.cs" />
+    <Compile Include="BD\Conections\BDInitializer.cs" />
+    <Compile Include="BD\Conections\IConnection.cs" />
+    <Compile Include="BD\Conections\MemorySQLConnection.cs" />
+    <Compile Include="BD\DAO\AccountDAO.cs" />
+    <Compile Include="BD\DAO\CreditCardDAO.cs" />
+    <Compile Include="BD\DAO\EntryExpensesDAO.cs" />
+    <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\ControllerBase.cs" />
+    <Compile Include="Controllers\CreditCardController.cs" />
+    <Compile Include="Controllers\DashBoardController.cs" />
+    <Compile Include="Controllers\ReportController.cs" />
+    <Compile Include="Controllers\EntryExpensesController.cs" />
+    <Compile Include="Controllers\PaymentMethodController.cs" />
+    <Compile Include="Controllers\ReportExportImportManager.cs" />
+    <Compile Include="Controllers\SubCategoriesController.cs" />
+    <Compile Include="BD\DAO\CategoriesDAO.cs" />
+    <Compile Include="BD\DAO\DAOBase.cs" />
+    <Compile Include="Enums\Enums.cs" />
+    <Compile Include="Extends\FormExtends.cs" />
+    <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Model\Account.cs" />
+    <Compile Include="Model\CreditCard.cs" />
+    <Compile Include="Model\Category.cs" />
+    <Compile Include="Model\Report.cs" />
+    <Compile Include="Utils\CategoriesDefault.cs" />
+    <Compile Include="Model\EntryExpenses.cs" />
+    <Compile Include="Model\PaymentMethod.cs" />
+    <Compile Include="Utils\EntryesRevenueDefault.cs" />
+    <Compile Include="Utils\PaymentMethodDefault.cs" />
+    <Compile Include="Model\SubCategories.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmBankAccount.cs">
+    <Compile Include="Utils\SystemColors.cs" />
+    <Compile Include="Views\Utils\FrmAbout.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmBankAccount.Designer.cs">
+    <Compile Include="Views\Utils\FrmAbout.Designer.cs">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Utils\FrmAboutInterest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmAboutInterest.Designer.cs">
+      <DependentUpon>FrmAboutInterest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Utils\FrmAdjusteBalance.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmAdjusteBalance.Designer.cs">
+      <DependentUpon>FrmAdjusteBalance.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Create\FrmBankAccount.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Create\FrmBankAccount.Designer.cs">
       <DependentUpon>FrmBankAccount.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmCategories.cs">
+    <Compile Include="Views\Create\FrmCategories.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmCategories.Designer.cs">
+    <Compile Include="Views\Create\FrmCategories.Designer.cs">
       <DependentUpon>FrmCategories.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmCreditCard.cs">
+    <Compile Include="Views\Create\FrmCreditCard.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmCreditCard.Designer.cs">
+    <Compile Include="Views\Create\FrmCreditCard.Designer.cs">
       <DependentUpon>FrmCreditCard.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmDashBoard.cs">
@@ -77,23 +156,53 @@
     <Compile Include="Views\FrmDashBoard.Designer.cs">
       <DependentUpon>FrmDashBoard.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmEntries.cs">
+    <Compile Include="Views\Utils\FrmEntries.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmEntries.Designer.cs">
+    <Compile Include="Views\Utils\FrmEntries.Designer.cs">
       <DependentUpon>FrmEntries.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmExpense.cs">
+    <Compile Include="Views\Create\FrmEntryExpenses.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmExpense.Designer.cs">
-      <DependentUpon>FrmExpense.cs</DependentUpon>
+    <Compile Include="Views\Create\FrmEntryExpenses.Designer.cs">
+      <DependentUpon>FrmEntryExpenses.cs</DependentUpon>
     </Compile>
-    <Compile Include="Views\FrmMothCalendar.cs">
+    <Compile Include="Views\List\FrmListBankAccount.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmMothCalendar.Designer.cs">
+    <Compile Include="Views\List\FrmListBankAccount.Designer.cs">
+      <DependentUpon>FrmListBankAccount.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\List\FrmListCategories.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\List\FrmListCategories.Designer.cs">
+      <DependentUpon>FrmListCategories.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\List\FrmListCreditCard.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\List\FrmListCreditCard.Designer.cs">
+      <DependentUpon>FrmListCreditCard.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Utils\FrmLoading.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmLoading.Designer.cs">
+      <DependentUpon>FrmLoading.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Utils\FrmMothCalendar.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmMothCalendar.Designer.cs">
       <DependentUpon>FrmMothCalendar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Utils\FrmPayInvoice.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmPayInvoice.Designer.cs">
+      <DependentUpon>FrmPayInvoice.cs</DependentUpon>
     </Compile>
     <Compile Include="Views\FrmReport.cs">
       <SubType>Form</SubType>
@@ -103,31 +212,64 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Views\FrmRevenue.cs">
+    <Compile Include="Views\List\FrmListEntryRevenue.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Views\FrmRevenue.Designer.cs">
-      <DependentUpon>FrmRevenue.cs</DependentUpon>
+    <Compile Include="Views\List\FrmListEntryRevenue.Designer.cs">
+      <DependentUpon>FrmListEntryRevenue.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="Views\FrmBankAccount.resx">
+    <Compile Include="Views\Utils\FrmTransfer.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmTransfer.Designer.cs">
+      <DependentUpon>FrmTransfer.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Utils\FrmSplashScreen.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Views\Utils\FrmSplashScreen.Designer.cs">
+      <DependentUpon>FrmSplashScreen.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Views\Utils\FrmAbout.resx">
+      <DependentUpon>FrmAbout.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmAboutInterest.resx">
+      <DependentUpon>FrmAboutInterest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmAdjusteBalance.resx">
+      <DependentUpon>FrmAdjusteBalance.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Create\FrmBankAccount.resx">
       <DependentUpon>FrmBankAccount.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmCategories.resx">
+    <EmbeddedResource Include="Views\Create\FrmCategories.resx">
       <DependentUpon>FrmCategories.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmCreditCard.resx">
+    <EmbeddedResource Include="Views\Create\FrmCreditCard.resx">
       <DependentUpon>FrmCreditCard.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmDashBoard.resx">
       <DependentUpon>FrmDashBoard.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmEntries.resx">
+    <EmbeddedResource Include="Views\Utils\FrmEntries.resx">
       <DependentUpon>FrmEntries.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmExpense.resx">
-      <DependentUpon>FrmExpense.cs</DependentUpon>
+    <EmbeddedResource Include="Views\Create\FrmEntryExpenses.resx">
+      <DependentUpon>FrmEntryExpenses.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmMothCalendar.resx">
+    <EmbeddedResource Include="Views\List\FrmListBankAccount.resx">
+      <DependentUpon>FrmListBankAccount.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\List\FrmListCategories.resx">
+      <DependentUpon>FrmListCategories.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\List\FrmListCreditCard.resx">
+      <DependentUpon>FrmListCreditCard.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmLoading.resx">
+      <DependentUpon>FrmLoading.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmMothCalendar.resx">
       <DependentUpon>FrmMothCalendar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -135,12 +277,22 @@
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmPayInvoice.resx">
+      <DependentUpon>FrmPayInvoice.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Views\FrmReport.resx">
       <DependentUpon>FrmReport.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Views\FrmRevenue.resx">
-      <DependentUpon>FrmRevenue.cs</DependentUpon>
+    <EmbeddedResource Include="Views\List\FrmListEntryRevenue.resx">
+      <DependentUpon>FrmListEntryRevenue.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmTransfer.resx">
+      <DependentUpon>FrmTransfer.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Views\Utils\FrmSplashScreen.resx">
+      <DependentUpon>FrmSplashScreen.cs</DependentUpon>
+    </EmbeddedResource>
+    <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -193,5 +345,103 @@
   <ItemGroup>
     <None Include="Resources\icons8_bank_70px.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_checkmark_30px_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_delete_30px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_plus_math_15px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_credit_control_70px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_credit_control_70px_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_credit_card_70px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_credit_card_70px_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_edit_26px_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_trash_26px_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_edit_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_trash_can_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\search %281%29.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\load.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_data_transfer_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_initiate_money_transfer_26px_3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\splashscrean.gif" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_import_csv_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_export_csv_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_double_down_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_chevron_right_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_chevron_right_26px_1.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_chevron_left_26px_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_invoice_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_info_26px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_info_26px_5.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_info_9px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_info_15px.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\icons8_info_15px_1.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.props')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.props'))" />
+    <Error Condition="!Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\packages\EntityFramework.6.4.4\build\EntityFramework.targets'))" />
+  </Target>
+  <Import Project="..\packages\EntityFramework.6.4.4\build\EntityFramework.targets" Condition="Exists('..\packages\EntityFramework.6.4.4\build\EntityFramework.targets')" />
 </Project>
